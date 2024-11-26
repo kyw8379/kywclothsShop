@@ -40,8 +40,6 @@ public class Item extends BaseEntity {
     private String itemDetail; // 상세 설명
 
     @Column(nullable = false)
-    private String itemSellStatus; // 판매 상태 = "판매 중", "품절"
-
-
+    private String itemSellStatus; // 판매 상태 (판매 중, 품절)
 
 }

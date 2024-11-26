@@ -42,7 +42,4 @@ public class User {
     @Column(nullable = false)
     private String bankAccount; //계좌번호
 
-
-
-
 }

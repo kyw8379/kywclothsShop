@@ -4,6 +4,8 @@ import com.example.kywclothsshop.entity.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -42,4 +44,6 @@ public class Item extends BaseEntity {
     @Column(nullable = false)
     private String itemSellStatus; // 판매 상태 (판매 중, 품절)
 
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    private List<ItemImg> itemImgList;
 }

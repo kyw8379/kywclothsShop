@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .login-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 350px;
+        }
+        h2 {
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 12px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .footer a {
+            text-decoration: none;
+            color: blue;
+            margin: 0 10px;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <h2>로그인</h2>
+    <form id="loginForm" onsubmit="return handleLogin(event)">
+        <div class="input-group">
+            <label for="email">이메일</label>
+            <input type="text" id="email" name="email" required>
+        </div>
+        <div class="input-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn">로그인</button>
+    </form>
+
+    <div class="footer">
+        <a href="login/searchid">이메일 찾기</a> |
+        <a href="login/searchpw">패스워드 찾기</a> |
+        <a href="/register">회원가입</a>
+
+
+    </div>
+</div>
+
+<script>
+    function handleLogin(event) {
+        event.preventDefault();
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+
+        const correctemail = 'user123@aaa';
+        const correctPassword = 'password123';
+
+         // 로그인 실패하면 페이지 넘어가는걸 막아줌
+        if (email !== correctemail || password !== correctPassword) {
+            alert('이메일 또는 비밀번호가 일치하지 않습니다.');
+            return false;
+        }
+
+
+        window.location.href = 'user/main';
+    }
+</script>
+
+</body>
+</html>

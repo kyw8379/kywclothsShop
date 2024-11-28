@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인 페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            text-align: center;
+            width: 100dvw;
+        }
+
+
+
+        .category-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 600px;
+            margin: 40px auto;
+        }
+
+        .category {
+            border: 2px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 150px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-around;
+            background-color: blue;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+
+        .navigation a {
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>환영합니다 오늘도 좋은하루 보내세요</h1>
+</header>
+
+<div class="category-container">
+    <div class="category">후드</div>
+    <div class="category">맨투맨</div>
+    <div class="category">자켓</div>
+    <div class="category">패딩</div>
+    <div class="category">니트</div>
+    <div class="category">바지</div>
+</div>
+
+<div class="navigation">
+    <div style="display:flex; gap:100px">
+        <a href="user/main">홈</a>
+        <a href="/search">검색</a>
+        <a href="#">추천코디</a>
+        <a href="#">마이페이지</a>
+        <a href="#">장바구니</a>
+    </div>
+</div>
+</body>
+</html>

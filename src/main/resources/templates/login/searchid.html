@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이디 찾기</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        input[type="name"],
+        input[type="phoneNumber"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result-message {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>이메일 찾기</h2>
+    <p>등록된 이름 과 휴대폰번호를 입력하세요.</p>
+
+    <form id="findIdForm" onsubmit="return handleSubmit(event)">
+        <div class="username">이름</div>
+        <input type="name" id="name" name="name" required placeholder="이름을 입력하세요" />
+        <div class="phoneNumber">휴대폰번호</div>
+        <input type="phoneNumber" id="phoneNumber" name="phoneNumber" required placeholder="휴대폰 번호를 입력하세요" />
+
+        <button type="submit">이메일 찾기</button>
+    </form>
+</div>
+
+<script>
+    function handleSubmit(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const phoneNumber = document.getElementById("phoneNumber").value.trim();
+
+        const userData = [
+            { name: "홍길동", phoneNumber: "010-1234-5678", userId: "hong123@aa" },
+            { name: "김철수", phoneNumber: "010-9876-5432", userId: "kimcs@bb" }
+        ];
+
+        const user = userData.find(
+            (user) => user.name === name && user.phoneNumber === phoneNumber
+        );
+
+        if (user) {
+            alert(`이메일은 '${user.email}'입니다.`);
+        } else {
+           alert("이메일을 찾을수 없습니다. 다시 입력해주세요");
+        }
+    }
+</script>
+</body>
+</html>

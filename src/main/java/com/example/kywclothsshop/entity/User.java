@@ -1,5 +1,6 @@
 package com.example.kywclothsshop.entity;
 
+import com.example.kywclothsshop.constant.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -42,4 +43,6 @@ public class User {
     @Column(nullable = false)
     private String bankAccount; //계좌번호
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

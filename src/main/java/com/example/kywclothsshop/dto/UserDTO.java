@@ -35,22 +35,19 @@ public class UserDTO {
     private String bankAccount; //계좌번호
 
 
-    public User dtoToEntity (UserDTO userDTO){
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
+    // UserDTO 내에서 dtoToEntity 메소드 수정
+    public  User dtoToEntity (PasswordEncoder passwordEncoder){
         User user = new User();
+        user.setUname(this.uname);
+        user.setEmail(this.email);
+        user.setAddress(this.address);
+        user.setBankAccount(this.bankAccount);
+        user.setPhoneNumber(this.phoneNumber);
+        user.setBirthDate(this.birthDate);
 
-        user.setUname(userDTO.getUname());
-        user.setEmail(userDTO.getEmail());
-        user.setAddress(userDTO.getAddress());
-        user.setBankAccount(userDTO.getBankAccount());
-        user.setPhoneNumber(userDTO.getPhoneNumber());
-        user.setBirthDate(userDTO.getBirthDate());
-
-
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setRole(Role.ADMIN);
-
+        user.setPassword(passwordEncoder.encode(this.password)); // 주입받은 PasswordEncoder 사용
+        user.setRole(Role.ADMIN); // 기본 Role 설정
         return user;
     }
+
 }

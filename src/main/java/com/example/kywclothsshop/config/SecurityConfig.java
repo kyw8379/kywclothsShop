@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .csrf( csrf -> csrf.disable())
                 // 로그인
                 .formLogin(
-                        formLogin ->formLogin.loginPage("/members/login")      //기본 로그인 페이지 지정
+                        formLogin ->formLogin.loginPage("/user/login")      //기본 로그인 페이지 지정
                                 .defaultSuccessUrl("/")                     //로그인이 성공했다면
                                 .usernameParameter("email")                      //로그인 <input name="email">
                         //컨트롤러로 보낼때~~
@@ -54,7 +54,7 @@ public class SecurityConfig {
                         //컨트롤러에서 만들어줄껄?
 
                 )
-                // 예외처리 // 로그인이 되지 않은 사용자 , 권한이 없는 사용자 접속시 취할 행동들
+        // 예외처리 // 로그인이 되지 않은 사용자 , 권한이 없는 사용자 접속시 취할 행동들
                 .exceptionHandling(
                         a -> a.authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                                 .accessDeniedHandler(new CustomAccessDeniedHandler())
@@ -70,11 +70,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
 
     }
-
-
-
-
-
 
 
 }

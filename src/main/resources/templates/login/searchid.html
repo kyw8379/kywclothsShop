@@ -83,6 +83,7 @@
         <input type="phoneNumber" id="phoneNumber" name="phoneNumber" required placeholder="휴대폰 번호를 입력하세요" />
 
         <button type="submit">이메일 찾기</button>
+
     </form>
 </div>
 
@@ -94,8 +95,8 @@
         const phoneNumber = document.getElementById("phoneNumber").value.trim();
 
         const userData = [
-            { name: "홍길동", phoneNumber: "010-1234-5678", userId: "hong123@aa" },
-            { name: "김철수", phoneNumber: "010-9876-5432", userId: "kimcs@bb" }
+            { name: "김영영", phoneNumber: "01000000000" },
+            { name: "김일일", phoneNumber: "01011111111"}
         ];
 
         const user = userData.find(

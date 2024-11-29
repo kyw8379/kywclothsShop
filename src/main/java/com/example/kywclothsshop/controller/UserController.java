@@ -29,31 +29,65 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerPost(@Valid UserDTO userDTO , BindingResult bindingResult , Model model) {
+    public String registerPost(@Valid UserDTO userDTO, BindingResult bindingResult, Model model) {
         log.info("저장의 post로 들어온 userDTO : " + userDTO);
+
         if (bindingResult.hasErrors()) {
-            //유효성검사에 이상이 있다면 다시 회원가입페이지로 보낼것이다.
-            // 무엇을 가지고? 에러내용을 그건 어디있니? 자동으로 넘어간다
-            // 단 return 으로 redirect 안됨 그건 RedirectAttributes 에 따로 담아야함
-            // 에러는 무엇인가 로그
             log.info(bindingResult.getAllErrors());
-            // 이 에러를 가져오는 getAllErrors의 내용을 리다이렉트로 보낼때 가져가면된다.
-
             return "user/register";
-
         }
+
         try {
             userService.saveUser(userDTO);
+
+
+
         } catch (IllegalStateException e) {
             model.addAttribute("msg", e.getMessage());
-            return "user/register";
+            return "user/register"; // 에러 메시지와 함께 회원가입 페이지로 반환
         }
-        return null;
-
+        return "redirect:/user/login"; // 회원가입 성공 시 로그인 페이지로 리다이렉트
     }
+
+
     @GetMapping("/login")
     public String loginGet(){
-        return null;
+
+        return "user/login" ;
     }
+
+    @PostMapping("/login")
+    public String loginPost(@Valid UserDTO userDTO, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            log.info(bindingResult.getAllErrors());
+            return "user/login"; // 유효성 검사 실패 시 로그인 페이지로 돌아간다.
+        }
+
+        // 로그인 추가
+        try {
+
+            boolean loginSuccess = userService.login(userDTO);
+
+            if (!loginSuccess) {
+                model.addAttribute("msg", "Invalid username or password");
+                return "user/login"; // 로그인 실패 시 에러 메시지와 함께 로그인 페이지로 돌아감
+            }
+
+        } catch (Exception e) {
+            model.addAttribute("msg", "Login failed: " + e.getMessage());
+            return "user/login"; // 예외 발생 시 에러 메시지와 함께 로그인 페이지로 돌아감
+        }
+
+        return "redirect:/user/main"; // 로그인 성공 시 main 페이지로 리다이렉트
+    }){
+
+        return "user/login" ;
+    }
+
+    @GetMapping("/main")
+    public String mainGet(){
+        return "user/main";
+    }
+
 
 }

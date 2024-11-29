@@ -16,11 +16,11 @@
         }
         .login-container {
             background-color: white;
-            padding: 20px;
+            padding: 40px;  /* 패딩을 늘려서 컨테이너 크기를 크게 함 */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 350px;
+            max-width: 450px; /* 최대 너비를 450px로 설정 */
         }
         h2 {
             text-align: center;
@@ -34,14 +34,14 @@
         }
         .input-group input {
             width: 100%;
-            padding: 8px;
+            padding: 10px;  /* 입력창의 패딩을 늘려서 크기를 키움 */
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 14px;
         }
         .btn {
             width: 100%;
-            padding: 10px;
+            padding: 12px;  /* 버튼 크기를 조금 더 크게 */
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -54,7 +54,7 @@
         }
         .footer {
             text-align: center;
-            margin-top: 15px;
+            margin-top: 20px;
         }
         .footer a {
             text-decoration: none;
@@ -70,11 +70,13 @@
 
 <div class="login-container">
     <h2>로그인</h2>
+
     <form id="loginForm" onsubmit="return handleLogin(event)">
         <div class="input-group">
             <label for="email">이메일</label>
             <input type="text" id="email" name="email" required>
         </div>
+
         <div class="input-group">
             <label for="password">비밀번호</label>
             <input type="password" id="password" name="password" required>
@@ -83,33 +85,47 @@
     </form>
 
     <div class="footer">
-        <a href="login/searchid">이메일 찾기</a> |
-        <a href="login/searchpw">패스워드 찾기</a> |
-        <a href="/register">회원가입</a>
-
-
+        <a href="/login/searchid">이메일 찾기</a> |
+        <a href="/login/searchpw">패스워드 찾기</a> |
+        <a href="/user/register">회원가입</a>
     </div>
 </div>
 
 <script>
-    function handleLogin(event) {
+    async function handleLogin(event) {
         event.preventDefault();
 
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
 
-
-        const correctemail = 'user123@aaa';
-        const correctPassword = 'password123';
-
-         // 로그인 실패하면 페이지 넘어가는걸 막아줌
-        if (email !== correctemail || password !== correctPassword) {
-            alert('이메일 또는 비밀번호가 일치하지 않습니다.');
+        // 입력값이 없는 경우 처리
+        if (!email || !password) {
+            alert('아이디 와 비밀번호를 입력해주세요.');
             return false;
         }
 
+        try {
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
 
-        window.location.href = 'user/main';
+            const data = await response.json();
+
+            if (response.ok) {
+                // 로그인 성공 시 리다이렉트
+                window.location.href = data.redirectUrl;
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            alert('서버와의 연결에 문제가 발생했습니다.');
+        }
+
+        return false;
     }
 </script>
 

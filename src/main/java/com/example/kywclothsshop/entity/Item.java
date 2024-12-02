@@ -21,7 +21,7 @@ public class Item extends BaseEntity {
     private Long ino; //pk값 아이템번호
 
     @Column(nullable = false)
-    private String iname; // 이름
+    private String iname; // 상품이름
 
     @Column(nullable = false)
     private String category; // 카테고리
@@ -41,7 +41,7 @@ public class Item extends BaseEntity {
     @Column(length = 500)
     private String itemDetail; // 상세 설명
 
-    @Column(nullable = false)
+
     private String itemSellStatus; // 판매 상태 (판매 중, 품절)
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)

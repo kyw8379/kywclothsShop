@@ -10,7 +10,7 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color:white;
+            background-color: white;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -37,7 +37,7 @@
             margin-bottom: 6px;
             display: block;
         }
-        input {
+        input, select {
             width: 100%;
             padding: 12px;
             margin-bottom: 16px;
@@ -81,10 +81,10 @@
     <form action="/user/register" method="POST">
 
         <label for="email">이메일:</label>
-        <input type="email" id="email" name="email" required><br>
+        <input type="email" id="email" name="email" required> <br>
 
         <label for="password">비밀번호:</label>
-        <input type="password" id="password" name="password" required><br>
+        <input type="password" id="password" name="password" required> <br>
 
         <label for="uname">이름:</label>
         <input type="text" id="uname" name="uname" required><br>
@@ -95,7 +95,7 @@
 
         <div class="row">
             <div class="col d-flex">
-                <label for="bankAccount">계좌:</label>
+                <label for="bankAccount"> 계좌: </label>
                 <select>
                     <option value="카카오뱅크">카카오뱅크</option>
                     <option value="신한은행">신한은행</option>
@@ -124,13 +124,43 @@
         <input type="text" id="address" name="address" required><br>
 
         <div class="buttons">
-            <button type="submit"> 가입 </button>
+            <button type="submit" id="submitBtn">가입</button>
             <button type="reset">다시작성</button>
         </div>
 
     </form>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        document.querySelector("form").addEventListener("submit", function (event) {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const uname = document.getElementById("uname").value.trim();
+            const birthDate = document.getElementById("birthDate").value.trim();
+            const bankAccount = document.getElementById("bankAccount").value.trim();
+            const phoneNumber = document.getElementById("phoneNumber").value.trim();
+            const address = document.getElementById("address").value.trim();
+
+            // 입력값 검증
+            if (!email || !password || !uname || !birthDate || !bankAccount || !phoneNumber || !address) {
+                alert("모든 필수 정보를 입력해주세요.");
+                event.preventDefault(); // 기본 제출 동작 중단
+                return;
+            }
+
+            // 이메일 검증
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert("유효한 이메일 주소를 입력해주세요.");
+                event.preventDefault(); // 기본 제출 동작 중단
+                return;
+            }
+
+            // 검증 통과 시 폼 제출
+            alert("회원가입이 완료되었습니다!");
+            location.href="/user/login"
+        });
+    </script>
 </div>
 
 </body>

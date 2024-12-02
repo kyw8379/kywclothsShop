@@ -76,9 +76,10 @@
     <h2>이메일 찾기</h2>
     <p>등록된 이름 과 휴대폰번호를 입력하세요.</p>
 
-    <form id="findIdForm" onsubmit="return handleSubmit(event)">
+    <form id="findIdForm">
         <div class="username">이름</div>
         <input type="name" id="name" name="name" required placeholder="이름을 입력하세요" />
+
         <div class="phoneNumber">휴대폰번호</div>
         <input type="phoneNumber" id="phoneNumber" name="phoneNumber" required placeholder="휴대폰 번호를 입력하세요" />
 
@@ -87,28 +88,6 @@
     </form>
 </div>
 
-<script>
-    function handleSubmit(event) {
-        event.preventDefault();
 
-        const name = document.getElementById("name").value.trim();
-        const phoneNumber = document.getElementById("phoneNumber").value.trim();
-
-        const userData = [
-            { name: "김영영", phoneNumber: "01000000000" },
-            { name: "김일일", phoneNumber: "01011111111"}
-        ];
-
-        const user = userData.find(
-            (user) => user.name === name && user.phoneNumber === phoneNumber
-        );
-
-        if (user) {
-            alert(`이메일은 '${user.email}'입니다.`);
-        } else {
-           alert("이메일을 찾을수 없습니다. 다시 입력해주세요");
-        }
-    }
-</script>
 </body>
 </html>

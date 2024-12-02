@@ -14,7 +14,12 @@
             width: 100dvw;
         }
 
-
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 20px 0;
+            font-size: 24px;
+        }
 
         .category-container {
             display: grid;
@@ -22,10 +27,14 @@
             gap: 20px;
             max-width: 600px;
             margin: 40px auto;
+            padding: 0 10px;
         }
 
         .category {
-            border: 2px solid black;
+            border: 2px solid #333;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -33,13 +42,20 @@
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
         }
 
         .navigation {
             display: flex;
-            justify-content: space-around;
-            background-color: blue;
-            padding: 10px 0;
+            justify-content: center;
+            align-items: center;
+            background-color: #007BFF;
+            padding: 10px 20px;
             margin-top: 20px;
         }
 
@@ -48,12 +64,20 @@
             color: white;
             font-size: 14px;
             font-weight: bold;
+            margin: 0 15px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .navigation a:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
 <header>
-    <h1>환영합니다 오늘도 좋은하루 보내세요</h1>
+    환영합니다 오늘도 좋은하루 보내세요 (긴급공지)
 </header>
 
 <div class="category-container">
@@ -65,14 +89,14 @@
     <div class="category">바지</div>
 </div>
 
-<div class="navigation">
-    <div style="display:flex; gap:100px">
-        <a href="user/main">홈</a>
-        <a href="/search">검색</a>
-        <a href="#">추천코디</a>
-        <a href="#">마이페이지</a>
-        <a href="#">장바구니</a>
-    </div>
+<footer>
+<div class="navigation" >
+    <a href="/user/main">홈</a>
+    <a href="/search">검색</a>
+    <a href="#">추천코디</a>
+    <a href="#">마이페이지</a>
+    <a href="#">장바구니</a>
 </div>
+</footer>
 </body>
 </html>

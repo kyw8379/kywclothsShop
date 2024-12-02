@@ -1,5 +1,6 @@
 package com.example.kywclothsshop.service;
 
+import com.example.kywclothsshop.constant.Role;
 import com.example.kywclothsshop.dto.UserDTO;
 import com.example.kywclothsshop.entity.User;
 import com.example.kywclothsshop.repository.UserRepository;
@@ -8,67 +9,68 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.beans.Encoder;
 
 @Service
 @Transactional
 @Log4j2
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
- private final UserRepository userRepository;
- private final PasswordEncoder passwordEncoder;
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
         User user = userRepository.findByEmail(email);
-
         if (user == null) {
-            throw new UsernameNotFoundException(email);
+            log.error("User not found with email: {}", email);
+            throw new UsernameNotFoundException("해당 이메일로 가입된 사용자를 찾을 수 없습니다.");
         }
+
         return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getEmail()) // 유일한 username으로 email 사용
-                .password(user.getPassword()) // 암호화된 비밀번호
-                .roles(user.getRole().name()) // 역할 설정
+                .username(user.getEmail())
+                .password(user.getPassword())
+                .roles(user.getRole().name())
                 .build();
     }
 
-
-    public User saveUser(UserDTO userDTO){
-        // 회원가입 여부 확인
+    // 회원가입 처리
+    public User saveUser(UserDTO userDTO) {
         validateDuplicateUser(userDTO.getEmail());
 
-
-        // UserDTO를 User 엔티티로 변환 후 저장
         User user = userDTO.dtoToEntity(passwordEncoder);
+        user.setRole(Role.USER); // 기본 권한 USER 설정
+        userRepository.save(user);
 
-        return userRepository.save(user);
+        log.info("회원가입 성공: {}", user.getEmail());
+
+        return user;
     }
 
-    //회원가입시 회원 가입여부 확인하는 메소드
-    private  void validateDuplicateUser(String email){
-
-
-        User user =
-                userRepository.findByEmail(email);
-        //user가  null 이라는건 db에 회원가입이
-        // 되어있지 않은 email이니 회원가입이 가능하고
-        // null이 아니라는건 db에 회원이 가입되어있으니
-        // 회원가입을 막거나 예외처리등을 수행하자
-        if(user != null){
-            throw  new IllegalStateException("이미 가입된 회원입니다.");
+    // 회원가입 시 중복된 이메일 확인
+    private void validateDuplicateUser(String email) {
+        if (userRepository.findByEmail(email) != null) {
+            log.warn("이미 존재하는 이메일: {}", email);
+            throw new IllegalStateException("이미 가입된 이메일입니다.");
         }
-        // 이 내용은 try{}catch(IllegalStateException e) {
-        //          model.att~~("msg", e.get메시지)
-        // return "u/signup";}
-        // 처리가능
-
-
     }
 
+    // 로그인 처리
+    public boolean login(UserDTO userDTO) {
+        User user = userRepository.findByEmail(userDTO.getEmail());
+        if (user == null) {
+            log.warn("로그인 실패 - 이메일 없음: {}", userDTO.getEmail());
+            return false;
+        }
 
+        boolean isPasswordMatch = passwordEncoder.matches(userDTO.getPassword(), user.getPassword());
+        if (!isPasswordMatch) {
+            log.warn("로그인 실패 - 비밀번호 불일치: {}", userDTO.getEmail());
+        }
+
+        return isPasswordMatch;
+    }
 }
